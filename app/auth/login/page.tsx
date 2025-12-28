@@ -1,14 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const router = useRouter();
   const supabase = createClient();
 
@@ -27,7 +28,6 @@ export default function LoginPage() {
       setLoading(false);
     } else {
       router.push("/applications");
-      router.refresh();
     }
   };
 
@@ -53,7 +53,6 @@ export default function LoginPage() {
               {error}
             </div>
           )}
-
           <div className="space-y-4">
             <div>
               <label
@@ -72,10 +71,11 @@ export default function LoginPage() {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
               />
             </div>
-
+          </div>
+          <div className="space-y-4">
             <div>
               <label
-                htmlFor="password"
+                htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
                 Password
@@ -91,13 +91,12 @@ export default function LoginPage() {
               />
             </div>
           </div>
-
           <button
             type="submit"
             disabled={loading}
             className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
       </div>

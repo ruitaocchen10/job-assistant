@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { Application } from "@/lib/types";
+import { SignOutButton } from "../auth/signout/SignOutButton";
 import Link from "next/link";
 
 export default async function ApplicationsPage() {
@@ -36,14 +37,7 @@ export default async function ApplicationsPage() {
               >
                 + New Application
               </Link>
-              <form action="/auth/signout" method="post">
-                <button
-                  type="submit"
-                  className="text-sm text-gray-600 hover:text-gray-900"
-                >
-                  Sign out
-                </button>
-              </form>
+              <SignOutButton />
             </div>
           </div>
         </div>
