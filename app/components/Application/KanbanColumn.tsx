@@ -2,7 +2,10 @@
 
 import { Application } from "@/lib/types";
 import { useDroppable } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { ApplicationCard } from "./ApplicationCard";
 import { QuickAddCard } from "./QuickAddCard";
 import { useState } from "react";
@@ -12,7 +15,12 @@ interface KanbanColumnProps {
   title: string;
   applications: Application[];
   onCardClick: (application: Application) => void;
-  onAddApplication: (data: { company_name: string; job_title: string; status: Application["status"] }) => Promise<void>;
+  onAddApplication: (data: {
+    company_name: string;
+    job_title: string;
+    job_url?: string;
+    status: Application["status"];
+  }) => Promise<void>;
 }
 
 const columnColors = {
@@ -47,7 +55,9 @@ export function KanbanColumn({
   return (
     <div className="flex flex-col w-80 flex-shrink-0">
       {/* Column Header */}
-      <div className={`rounded-t-lg border-t border-l border-r p-3 ${columnColors[status]}`}>
+      <div
+        className={`rounded-t-lg border-t border-l border-r p-3 ${columnColors[status]}`}
+      >
         <div className="flex items-center justify-between mb-2">
           <h2 className={`font-semibold text-sm ${headerColors[status]}`}>
             {title}
@@ -69,7 +79,10 @@ export function KanbanColumn({
         ref={setNodeRef}
         className={`flex-1 rounded-b-lg border-b border-l border-r p-2 ${columnColors[status]} min-h-[200px] max-h-[calc(100vh-250px)] overflow-y-auto`}
       >
-        <SortableContext items={applicationIds} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={applicationIds}
+          strategy={verticalListSortingStrategy}
+        >
           <div className="space-y-2">
             {isAdding && (
               <QuickAddCard

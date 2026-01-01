@@ -31,9 +31,11 @@ const COLUMNS: { status: Application["status"]; title: string }[] = [
 ];
 
 export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
-  const [applications, setApplications] = useState<Application[]>(initialApplications);
+  const [applications, setApplications] =
+    useState<Application[]>(initialApplications);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+  const [selectedApplication, setSelectedApplication] =
+    useState<Application | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -43,7 +45,9 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
   // Get current user on mount
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) {
         setUserId(user.id);
       }
@@ -116,7 +120,9 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
       // Revert optimistic update
       setApplications((apps) =>
         apps.map((app) =>
-          app.id === applicationId ? { ...app, status: application.status } : app
+          app.id === applicationId
+            ? { ...app, status: application.status }
+            : app
         )
       );
     } else {
@@ -127,6 +133,7 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
   const handleAddApplication = async (data: {
     company_name: string;
     job_title: string;
+    job_url?: string;
     status: Application["status"];
   }) => {
     if (!userId) {
@@ -141,8 +148,8 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
           user_id: userId,
           company_name: data.company_name,
           job_title: data.job_title,
+          job_url: data.job_url || null,
           status: data.status,
-          applied_date: data.status === "applied" ? new Date().toISOString().split("T")[0] : null,
         },
       ])
       .select()
@@ -159,7 +166,10 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
     }
   };
 
-  const handleUpdateApplication = async (id: string, data: Partial<Application>) => {
+  const handleUpdateApplication = async (
+    id: string,
+    data: Partial<Application>
+  ) => {
     const { error } = await supabase
       .from("applications")
       .update(data)
@@ -177,17 +187,17 @@ export function KanbanBoard({ initialApplications }: KanbanBoardProps) {
 
     // Update selected application if it's the one being edited
     if (selectedApplication?.id === id) {
-      setSelectedApplication({ ...selectedApplication, ...data } as Application);
+      setSelectedApplication({
+        ...selectedApplication,
+        ...data,
+      } as Application);
     }
 
     router.refresh();
   };
 
   const handleDeleteApplication = async (id: string) => {
-    const { error } = await supabase
-      .from("applications")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from("applications").delete().eq("id", id);
 
     if (error) {
       console.error("Failed to delete application:", error);

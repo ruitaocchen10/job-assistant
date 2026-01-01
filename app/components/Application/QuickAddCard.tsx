@@ -8,6 +8,7 @@ interface QuickAddCardProps {
   onAdd: (data: {
     company_name: string;
     job_title: string;
+    job_url?: string;
     status: Application["status"];
   }) => Promise<void>;
   onCancel: () => void;
@@ -16,6 +17,7 @@ interface QuickAddCardProps {
 export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
   const [companyName, setCompanyName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
+  const [jobUrl, setJobUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,10 +29,12 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
       await onAdd({
         company_name: companyName.trim(),
         job_title: jobTitle.trim(),
+        job_url: jobUrl.trim() || undefined,
         status,
       });
       setCompanyName("");
       setJobTitle("");
+      setJobUrl("");
       onCancel();
     } catch (error) {
       console.error("Failed to add application:", error);
@@ -58,6 +62,14 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
         value={jobTitle}
         onChange={(e) => setJobTitle(e.target.value)}
         placeholder="Job title"
+        className="w-full mb-2 px-2 py-1 text-sm border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        disabled={loading}
+      />
+      <input
+        type="url"
+        value={jobUrl}
+        onChange={(e) => setJobUrl(e.target.value)}
+        placeholder="Job URL (optional)"
         className="w-full mb-3 px-2 py-1 text-sm border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         disabled={loading}
       />

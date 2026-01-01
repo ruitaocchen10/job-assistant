@@ -94,8 +94,18 @@ export function ApplicationSidebar({
               onClick={onClose}
               className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -113,7 +123,9 @@ export function ApplicationSidebar({
                 <input
                   type="text"
                   value={formData.company_name || ""}
-                  onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, company_name: e.target.value })
+                  }
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -127,7 +139,9 @@ export function ApplicationSidebar({
                 <input
                   type="text"
                   value={formData.job_title || ""}
-                  onChange={(e) => setFormData({ ...formData, job_title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, job_title: e.target.value })
+                  }
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -141,7 +155,9 @@ export function ApplicationSidebar({
                 <input
                   type="url"
                   value={formData.job_url || ""}
-                  onChange={(e) => setFormData({ ...formData, job_url: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, job_url: e.target.value })
+                  }
                   placeholder="https://..."
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -155,7 +171,9 @@ export function ApplicationSidebar({
                 <input
                   type="text"
                   value={formData.location || ""}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
                   placeholder="e.g., San Francisco, CA or Remote"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -168,7 +186,12 @@ export function ApplicationSidebar({
                 </label>
                 <select
                   value={formData.status || "applied"}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value as Application["status"] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      status: e.target.value as Application["status"],
+                    })
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="wishlist">Wishlist</option>
@@ -188,7 +211,9 @@ export function ApplicationSidebar({
                 <input
                   type="date"
                   value={formData.applied_date || ""}
-                  onChange={(e) => setFormData({ ...formData, applied_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, applied_date: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -202,7 +227,14 @@ export function ApplicationSidebar({
                   <input
                     type="number"
                     value={formData.salary_min || ""}
-                    onChange={(e) => setFormData({ ...formData, salary_min: e.target.value ? parseInt(e.target.value) : null })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        salary_min: e.target.value
+                          ? parseInt(e.target.value)
+                          : null,
+                      })
+                    }
                     placeholder="e.g., 80000"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -214,7 +246,14 @@ export function ApplicationSidebar({
                   <input
                     type="number"
                     value={formData.salary_max || ""}
-                    onChange={(e) => setFormData({ ...formData, salary_max: e.target.value ? parseInt(e.target.value) : null })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        salary_max: e.target.value
+                          ? parseInt(e.target.value)
+                          : null,
+                      })
+                    }
                     placeholder="e.g., 120000"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -228,7 +267,9 @@ export function ApplicationSidebar({
                 </label>
                 <textarea
                   value={formData.notes || ""}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, notes: e.target.value })
+                  }
                   rows={6}
                   placeholder="Any additional notes about this application..."
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -343,9 +384,11 @@ export function ApplicationSidebar({
                     Salary Range
                   </label>
                   <p className="text-gray-900">
-                    {application.salary_min && `$${application.salary_min.toLocaleString()}`}
+                    {application.salary_min &&
+                      `$${application.salary_min.toLocaleString()}`}
                     {application.salary_min && application.salary_max && " - "}
-                    {application.salary_max && `$${application.salary_max.toLocaleString()}`}
+                    {application.salary_max &&
+                      `$${application.salary_max.toLocaleString()}`}
                   </p>
                 </div>
               )}
@@ -356,14 +399,20 @@ export function ApplicationSidebar({
                   <label className="block text-sm font-medium text-gray-500 mb-1">
                     Notes
                   </label>
-                  <p className="text-gray-900 whitespace-pre-wrap">{application.notes}</p>
+                  <p className="text-gray-900 whitespace-pre-wrap">
+                    {application.notes}
+                  </p>
                 </div>
               )}
 
               {/* Timestamps */}
               <div className="pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
-                <p>Created: {new Date(application.created_at).toLocaleString()}</p>
-                <p>Updated: {new Date(application.updated_at).toLocaleString()}</p>
+                <p>
+                  Created: {new Date(application.created_at).toLocaleString()}
+                </p>
+                <p>
+                  Updated: {new Date(application.updated_at).toLocaleString()}
+                </p>
               </div>
 
               {/* Delete Button */}
