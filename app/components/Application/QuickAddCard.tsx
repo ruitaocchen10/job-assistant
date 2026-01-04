@@ -46,7 +46,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-lg border-2 border-blue-300 bg-white p-4 shadow-sm"
+      className="rounded-lg border-2 border-blue-300 dark:border-blue-600 bg-white dark:bg-gray-800 p-4 shadow-sm"
     >
       <input
         type="text"
@@ -54,7 +54,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
         onChange={(e) => setCompanyName(e.target.value)}
         placeholder="Company name"
         autoFocus
-        className="w-full mb-2 px-2 py-1 text-sm font-semibold border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full mb-2 px-2 py-1 text-sm font-semibold border border-gray-200 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         disabled={loading}
       />
       <input
@@ -62,7 +62,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
         value={jobTitle}
         onChange={(e) => setJobTitle(e.target.value)}
         placeholder="Job title"
-        className="w-full mb-2 px-2 py-1 text-sm border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full mb-2 px-2 py-1 text-sm border border-gray-200 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         disabled={loading}
       />
       <input
@@ -70,7 +70,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
         value={jobUrl}
         onChange={(e) => setJobUrl(e.target.value)}
         placeholder="Job URL (optional)"
-        className="w-full mb-3 px-2 py-1 text-sm border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full mb-3 px-2 py-1 text-sm border border-gray-200 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         disabled={loading}
       />
       <div className="flex gap-2">
@@ -85,7 +85,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-50"
+          className="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
         >
           Cancel
         </button>

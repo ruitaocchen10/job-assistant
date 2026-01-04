@@ -24,12 +24,12 @@ interface KanbanColumnProps {
 }
 
 const columnColors = {
-  wishlist: "bg-gray-50 border-gray-200",
-  applied: "bg-blue-50 border-blue-200",
-  interviewing: "bg-yellow-50 border-yellow-200",
-  offered: "bg-green-50 border-green-200",
-  rejected: "bg-red-50 border-red-200",
-  withdrawn: "bg-gray-50 border-gray-300",
+  wishlist: "bg-gray-100 border-gray-100",
+  applied: "bg-blue-50 border-blue-50",
+  interviewing: "bg-yellow-50 border-yellow-50",
+  offered: "bg-green-50 border-green-50",
+  rejected: "bg-red-50 border-red-50",
+  withdrawn: "bg-gray-50 border-gray-50",
 };
 
 const headerColors = {
@@ -39,6 +39,15 @@ const headerColors = {
   offered: "text-green-700",
   rejected: "text-red-700",
   withdrawn: "text-gray-700",
+};
+
+const addButtonColors = {
+  wishlist: "bg-white hover:bg-gray-50 text-gray-700 border border-gray-300",
+  applied: "bg-white hover:bg-blue-100 text-blue-700 border border-blue-300",
+  interviewing: "bg-white hover:bg-yellow-100 text-yellow-700 border border-yellow-300",
+  offered: "bg-white hover:bg-green-100 text-green-700 border border-green-300",
+  rejected: "bg-white hover:bg-red-100 text-red-700 border border-red-300",
+  withdrawn: "bg-white hover:bg-gray-100 text-gray-700 border border-gray-300",
 };
 
 export function KanbanColumn({
@@ -68,9 +77,9 @@ export function KanbanColumn({
         </div>
         <button
           onClick={() => setIsAdding(true)}
-          className="w-full text-left text-xs text-gray-600 hover:text-gray-900 hover:bg-white/50 rounded px-2 py-1.5 transition-colors"
+          className={`w-full text-center text-xs font-semibold rounded-md px-3 py-2 transition-all duration-200 shadow-sm hover:shadow ${addButtonColors[status]}`}
         >
-          + Add
+          + Add Application
         </button>
       </div>
 

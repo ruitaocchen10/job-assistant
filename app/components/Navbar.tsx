@@ -45,10 +45,16 @@ export function Navbar({ logoSrc, logoAlt = "Logo" }: NavbarProps) {
               Applications
             </Link>
             <Link
-              href="/applications"
+              href="/resume"
               className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
             >
-              Applications
+              Resumes
+            </Link>
+            <Link
+              href="/cover_letters"
+              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+            >
+              Cover Letters
             </Link>
           </nav>
 
