@@ -3,7 +3,7 @@ import { Navbar } from "../components/Navbar";
 export default function ComingSoonPage() {
   return (
     <div className="min-h-screen bg-gray-25">
-      <Navbar logoSrc="/images/Logo.png" logoAlt="Job Tracker Logo" />
+      <Navbar />
 
       {/* Main content */}
       <main className="px-4 py-8 sm:px-6 lg:px-8">

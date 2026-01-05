@@ -66,7 +66,7 @@ export function KanbanColumn({
     <div className="flex flex-col w-80 flex-shrink-0">
       {/* Column Header */}
       <div
-        className={`rounded-t-lg border-t border-l border-r p-3 ${columnColors[status]}`}
+        className={`rounded-t-lg border-t border-l border-r p-2 ${columnColors[status]}`}
       >
         <div className="flex items-center justify-between mb-2">
           <h2 className={`font-semibold text-sm ${headerColors[status]}`}>

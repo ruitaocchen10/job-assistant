@@ -11,29 +11,12 @@ interface NavbarProps {
 
 export function Navbar({ logoSrc, logoAlt = "Logo" }: NavbarProps) {
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-30">
+    <header className="bg-gray-25 sticky top-0 z-30">
       <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center">
-            <Link
-              href="/applications"
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-            >
-              {logoSrc ? (
-                <Image
-                  src={logoSrc}
-                  alt={logoAlt}
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              ) : (
-                <span className="text-xl font-bold text-gray-900">
-                  Job Tracker
-                </span>
-              )}
-            </Link>
+          <div className="flex items-center font-extrabold text-xl">
+            Job Tracker
           </div>
 
           {/* Navigation Section */}
