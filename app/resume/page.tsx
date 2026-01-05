@@ -1,43 +1,99 @@
+import { createClient } from "@/lib/supabase/server";
 import { Navbar } from "../components/Navbar";
+import { ProfileSection } from "../components/resume/profile/ProfileSection";
+import { WorkExperienceSection } from "../components/resume/work-experience/WorkExperienceSection";
+import { EducationSection } from "../components/resume/education/EducationSection";
+import { SkillsSection } from "../components/resume/skills/SkillsSection";
+import { ProjectsSection } from "../components/resume/projects/ProjectsSection";
+import { CertificationsSection } from "../components/resume/certifications/CertificationsSection";
 
-export default function ComingSoonPage() {
+export default async function ResumePage() {
+  const supabase = await createClient();
+
+  // Get current user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return <div>Please log in to access this page.</div>;
+  }
+
+  // Fetch all resume data
+  const [
+    { data: profile },
+    { data: workExperiences },
+    { data: education },
+    { data: skills },
+    { data: projects },
+    { data: certifications },
+  ] = await Promise.all([
+    supabase.from("user_profiles").select("*").eq("user_id", user.id).single(),
+    supabase
+      .from("work_experiences")
+      .select("*")
+      .order("display_order", { ascending: true })
+      .order("start_date", { ascending: false }),
+    supabase
+      .from("education")
+      .select("*")
+      .order("display_order", { ascending: true })
+      .order("graduation_date", { ascending: false }),
+    supabase
+      .from("skills")
+      .select("*")
+      .order("display_order", { ascending: true }),
+    supabase
+      .from("projects")
+      .select("*")
+      .order("display_order", { ascending: true }),
+    supabase
+      .from("certifications")
+      .select("*")
+      .order("display_order", { ascending: true })
+      .order("issue_date", { ascending: false }),
+  ]);
+
   return (
-    <div className="min-h-screen bg-gray-25">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      {/* Main content */}
-      <main className="px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-          <div className="text-center">
-            <div className="mb-8">
-              <svg
-                className="mx-auto h-24 w-24 text-indigo-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Resume Builder</h1>
+          <p className="mt-2 text-gray-600">
+            Build your resume library by adding your work experiences,
+            education, skills, and projects. Later, you'll be able to generate
+            tailored resumes for specific job applications.
+          </p>
+        </div>
 
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Coming Soon!
-            </h1>
+        {/* All Resume Sections */}
+        <div className="space-y-6">
+          {/* Personal Information */}
+          <ProfileSection initialData={profile} userId={user.id} />
 
-            <p className="text-xl text-gray-600 mb-8">
-              This feature will be released soon!
-            </p>
+          {/* Work Experience */}
+          <WorkExperienceSection
+            initialData={workExperiences || []}
+            userId={user.id}
+          />
 
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <div className="h-2 w-2 bg-indigo-600 rounded-full animate-pulse"></div>
-              <span>We're working on something exciting</span>
-            </div>
-          </div>
+          {/* Education */}
+          <EducationSection initialData={education || []} userId={user.id} />
+
+          {/* Skills */}
+          <SkillsSection initialData={skills || []} userId={user.id} />
+
+          {/* Projects */}
+          <ProjectsSection initialData={projects || []} userId={user.id} />
+
+          {/* Certifications */}
+          <CertificationsSection
+            initialData={certifications || []}
+            userId={user.id}
+          />
         </div>
       </main>
     </div>

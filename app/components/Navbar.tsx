@@ -12,7 +12,7 @@ interface NavbarProps {
 export function Navbar({ logoSrc, logoAlt = "Logo" }: NavbarProps) {
   return (
     <header className="bg-gray-25 sticky top-0 z-30">
-      <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div className="bg-gray-25 mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
           <div className="flex items-center font-extrabold text-xl">
