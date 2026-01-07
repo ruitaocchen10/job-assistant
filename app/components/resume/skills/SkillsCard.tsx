@@ -36,7 +36,7 @@ export function SkillsCard({
           <button
             onClick={onEdit}
             disabled={isLoading}
-            className="rounded-md p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 disabled:opacity-50"
+            className="rounded-md p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
             title="Edit"
           >
             <svg
@@ -56,7 +56,7 @@ export function SkillsCard({
           <button
             onClick={onDelete}
             disabled={isLoading}
-            className="rounded-md p-2 text-red-600 hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
+            className="rounded-md p-2 text-red-600 hover:bg-red-50 hover:text-red-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
             title="Delete"
           >
             <svg

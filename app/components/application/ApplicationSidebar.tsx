@@ -70,7 +70,7 @@ export function ApplicationSidebar({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/30 z-40 transition-opacity"
+        className="fixed inset-0 bg-black/30 z-40 transition-opacity cursor-pointer"
         onClick={onClose}
       />
 
@@ -85,14 +85,14 @@ export function ApplicationSidebar({
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded"
+                className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded cursor-pointer"
               >
                 Edit
               </button>
             )}
             <button
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
+              className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 cursor-pointer"
             >
               <svg
                 className="w-5 h-5"
@@ -281,7 +281,7 @@ export function ApplicationSidebar({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
@@ -302,7 +302,7 @@ export function ApplicationSidebar({
                     });
                   }}
                   disabled={loading}
-                  className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                  className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
@@ -314,7 +314,7 @@ export function ApplicationSidebar({
                   type="button"
                   onClick={handleDelete}
                   disabled={loading}
-                  className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50"
+                  className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   Delete Application
                 </button>
@@ -420,7 +420,7 @@ export function ApplicationSidebar({
                 <button
                   onClick={handleDelete}
                   disabled={loading}
-                  className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50"
+                  className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   Delete Application
                 </button>
