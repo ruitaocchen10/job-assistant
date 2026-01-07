@@ -100,7 +100,7 @@ export function ApplicationCard({
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="text-xs text-blue-600 hover:text-blue-800 mt-2 flex items-center gap-1 hover:underline"
+          className="text-xs text-blue-600 hover:text-blue-800 mt-2 flex items-center gap-1 hover:underline cursor-pointer"
         >
           <svg
             className="w-3 h-3"

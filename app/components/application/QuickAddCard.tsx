@@ -77,7 +77,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
         <button
           type="submit"
           disabled={loading || !companyName.trim() || !jobTitle.trim()}
-          className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {loading ? "Adding..." : "Add"}
         </button>
@@ -85,7 +85,7 @@ export function QuickAddCard({ status, onAdd, onCancel }: QuickAddCardProps) {
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+          className="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
         >
           Cancel
         </button>

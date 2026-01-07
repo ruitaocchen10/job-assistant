@@ -89,7 +89,7 @@ export function EditableField({
     >
       <span>{value || placeholder}</span>
       <button
-        className="ml-2 opacity-0 transition-opacity group-hover:opacity-100"
+        className="ml-2 opacity-0 transition-opacity group-hover:opacity-100 cursor-pointer"
         title="Edit"
       >
         <svg

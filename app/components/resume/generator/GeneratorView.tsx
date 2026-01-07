@@ -12,6 +12,7 @@ import {
 import { JobDescriptionInput } from "./JobDescriptionInput";
 import { GenerateButton } from "./GenerateButton";
 import { LoadingState } from "./LoadingState";
+import { DownloadButton } from "./DownloadButton";
 import { ModernTemplate } from "../templates/ModernTemplate";
 
 interface GeneratorViewProps {
@@ -142,7 +143,7 @@ export function GeneratorView({ userData }: GeneratorViewProps) {
         skills: item.skills,
       }));
 
-    // Get selected projects with custom bullets
+    // Get selected projects with custom bullets (remove description to avoid duplication)
     const selectedProjects = aiResume.selectedProjects
       .filter((item) => item.include)
       .map((item) => {
@@ -151,6 +152,11 @@ export function GeneratorView({ userData }: GeneratorViewProps) {
         );
         return {
           ...original,
+          // If AI provided custom bullets, remove description to avoid duplication
+          description:
+            item.customBullets && item.customBullets.length > 0
+              ? null
+              : original?.description,
           bullets: item.customBullets || original?.bullets || [],
         };
       })
@@ -290,9 +296,12 @@ export function GeneratorView({ userData }: GeneratorViewProps) {
               <h3 className="text-lg font-semibold text-gray-900">
                 Resume Preview
               </h3>
-              <p className="text-sm text-gray-600">
-                Click any text to edit inline
-              </p>
+              <div className="flex items-center gap-4">
+                <p className="text-sm text-gray-600">
+                  Click any text to edit inline
+                </p>
+                <DownloadButton resumeData={editableResumeData} />
+              </div>
             </div>
             <ModernTemplate data={editableResumeData} onEdit={handleEdit} />
           </div>

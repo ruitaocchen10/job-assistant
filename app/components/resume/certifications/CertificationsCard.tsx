@@ -57,7 +57,7 @@ export function CertificationCard({
               href={certification.credential_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 hover:underline"
+              className="mt-1 inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
             >
               View Credential
               <svg
