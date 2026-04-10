@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import applications, jobs
+from .routers import applications, jobs
 
 app = FastAPI(title="Job Assistant API")
 
