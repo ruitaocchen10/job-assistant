@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     posted_at  TEXT NOT NULL,
     llm_score  REAL,
     llm_notes  TEXT,
+    hidden     INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
 );
 
