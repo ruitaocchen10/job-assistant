@@ -1,3 +1,5 @@
+""" Populates database with information gotten from the job fetchers """
+
 import json
 import os
 import sqlite3
@@ -38,8 +40,8 @@ def save_jobs(jobs: list[dict]) -> int:
                 """
                 INSERT INTO jobs
                     (company_id, title, location, url, salary, job_type,
-                     tags, source, source_id, posted_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     tags, description, source, source_id, posted_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     company_id,
@@ -49,6 +51,7 @@ def save_jobs(jobs: list[dict]) -> int:
                     job.get("salary"),
                     job.get("job_type"),
                     json.dumps(job.get("tags", [])),
+                    job.get("description", ""),
                     job["source"],
                     job["source_id"],
                     job["posted_at"],

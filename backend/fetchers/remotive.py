@@ -1,4 +1,7 @@
+""" Fetches jobs from the remotive API """
+
 import json
+import re
 import requests
 from datetime import datetime, timedelta, timezone
 
@@ -52,7 +55,7 @@ def _normalize(job: dict) -> dict:
         "salary":       job.get("salary") or None,
         "job_type":     job.get("job_type"),
         "tags":         job.get("tags", []),
-        "description":  job.get("description", ""),
+        "description":  re.sub(r"<[^>]+>", " ", job.get("description", "")).strip(),
         "source":       "remotive",
         "source_id":    f"remotive-{job['id']}",
         "posted_at":    job["publication_date"],

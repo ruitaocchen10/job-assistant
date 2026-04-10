@@ -1,3 +1,5 @@
+""" Runs full pipeline """
+
 from fetchers.remotive import fetch_jobs
 from db import save_jobs
 
