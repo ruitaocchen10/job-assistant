@@ -5,6 +5,8 @@ import { Job } from "@/lib/types"
 import { getJobs } from "@/lib/api"
 import { JobCard } from "@/components/jobs/JobCard"
 import { JobFilters } from "@/components/jobs/JobFilters"
+import { AddJobModal } from "@/components/jobs/AddJobModal"
+import { Button } from "@/components/ui/Button"
 
 interface Filters {
   keyword: string
@@ -16,6 +18,7 @@ export default function JobsPage() {
   const [filters, setFilters] = useState<Filters>({ keyword: "", score_min: 0 })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showAddModal, setShowAddModal] = useState(false)
   const keywordDebounce = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   function fetchJobs(f: Filters) {
@@ -51,13 +54,27 @@ export default function JobsPage() {
     setJobs(prev => prev.filter(j => j.id !== jobId))
   }
 
+  function handleJobAdded(job: Job) {
+    setJobs(prev => [job, ...prev])
+    setShowAddModal(false)
+  }
+
   return (
     <div className="flex flex-col gap-6 p-4 md:p-6 max-w-7xl mx-auto w-full">
 
       {/* Page header */}
-      <div>
-        <h1 className="text-xl font-semibold text-text-primary tracking-tight">Jobs</h1>
-        <p className="text-sm text-text-muted mt-0.5">Browse and save remote job listings</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-semibold text-text-primary tracking-tight">Jobs</h1>
+          <p className="text-sm text-text-muted mt-0.5">Browse and save remote job listings</p>
+        </div>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => setShowAddModal(true)}
+        >
+          + Add Job
+        </Button>
       </div>
 
       {/* Filters */}
@@ -101,6 +118,14 @@ export default function JobsPage() {
             />
           ))}
         </div>
+      )}
+
+      {/* Add Job Modal */}
+      {showAddModal && (
+        <AddJobModal
+          onSuccess={handleJobAdded}
+          onClose={() => setShowAddModal(false)}
+        />
       )}
     </div>
   )

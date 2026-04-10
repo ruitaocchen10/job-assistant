@@ -34,6 +34,24 @@ export function hideJob(jobId: number): Promise<void> {
   return request(`/jobs/${jobId}`, { method: "DELETE" });
 }
 
+export interface JobCreate {
+  url: string;
+  title: string;
+  company: string;
+  location?: string;
+  salary?: string;
+  job_type?: string;
+  tags?: string[];
+}
+
+export function addJob(data: JobCreate): Promise<Job> {
+  return request<Job>("/jobs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
 // Applications
 
 export function getApplications(): Promise<Application[]> {

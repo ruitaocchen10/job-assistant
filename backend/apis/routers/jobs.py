@@ -1,4 +1,5 @@
 import json
+import sqlite3
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
@@ -38,6 +39,16 @@ class ApplicationOut(BaseModel):
     updated_at: str
 
 
+class JobCreate(BaseModel):
+    url: str
+    title: str
+    company: str
+    location: str | None = None
+    salary: str | None = None
+    job_type: str | None = None
+    tags: list[str] = []
+
+
 @router.get("", response_model=list[JobOut])
 def list_jobs(score_min: float = 0, keyword: str = None, source: str = None):
     conn = get_connection()
@@ -75,6 +86,47 @@ def list_jobs(score_min: float = 0, keyword: str = None, source: str = None):
         JobOut(**{**dict(row), "tags": json.loads(row["tags"] or "[]")})
         for row in rows
     ]
+
+
+@router.post("", response_model=JobOut, status_code=201)
+def create_job(body: JobCreate):
+    from db import save_jobs
+
+    job_dict = {
+        "url": body.url,
+        "title": body.title,
+        "company": body.company,
+        "location": body.location,
+        "salary": body.salary,
+        "job_type": body.job_type,
+        "tags": body.tags,
+        "source": "manual",
+        "source_id": body.url,
+        "posted_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    if save_jobs([job_dict]) == 0:
+        raise HTTPException(status_code=409, detail="A job with this URL already exists")
+
+    conn = get_connection()
+    conn.row_factory = __import__("sqlite3").Row
+    row = conn.execute(
+        """
+        SELECT
+            jobs.id, jobs.title, companies.name AS company,
+            companies.logo_url AS company_logo, jobs.location, jobs.salary,
+            jobs.job_type, jobs.tags, jobs.llm_score, jobs.llm_notes,
+            jobs.posted_at, jobs.source, jobs.url,
+            applications.status AS application_status
+        FROM jobs
+        JOIN companies ON jobs.company_id = companies.id
+        LEFT JOIN applications ON applications.job_id = jobs.id
+        WHERE jobs.url = ?
+        """,
+        (body.url,),
+    ).fetchone()
+    conn.close()
+    return JobOut(**{**dict(row), "tags": json.loads(row["tags"] or "[]")})
 
 
 @router.post("/{job_id}/save", response_model=ApplicationOut, status_code=201)
