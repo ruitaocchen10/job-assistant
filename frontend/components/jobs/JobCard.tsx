@@ -100,7 +100,7 @@ export function JobCard({ job, onSaved, onHidden }: JobCardProps) {
             href={job.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-text-primary hover:text-accent transition-colors line-clamp-2 leading-snug"
+            className="text- font-semibold text-text-primary hover:text-accent transition-colors line-clamp-2 leading-snug"
           >
             {job.title}
           </a>
@@ -125,7 +125,7 @@ export function JobCard({ job, onSaved, onHidden }: JobCardProps) {
 
       {/* Tags */}
       {job.tags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap gap-1">
           {job.tags.slice(0, 5).map((tag) => (
             <span
               key={tag}
@@ -150,8 +150,7 @@ export function JobCard({ job, onSaved, onHidden }: JobCardProps) {
       )}
 
       {/* Footer */}
-      <div className="flex-1" />
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pt-1 border-t border-border">
         <span className="text-xs text-text-muted">
           {timeAgo(job.posted_at)}
         </span>
