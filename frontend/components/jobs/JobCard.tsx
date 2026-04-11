@@ -111,46 +111,49 @@ export function JobCard({ job, onSaved, onHidden }: JobCardProps) {
         <ScoreBadge score={job.llm_score} />
       </div>
 
-      {/* Meta */}
-      <div className="flex flex-wrap gap-1.5">
-        {job.job_type && (
-          <Badge
-            label={JOB_TYPE_LABELS[job.job_type] ?? job.job_type}
-            variant="accent"
-          />
+      {/* Middle */}
+      <div className="flex flex-col gap-4 flex-1">
+        {/* Meta */}
+        <div className="flex flex-wrap gap-1.5">
+          {job.job_type && (
+            <Badge
+              label={JOB_TYPE_LABELS[job.job_type] ?? job.job_type}
+              variant="accent"
+            />
+          )}
+          {job.location && <Badge label={job.location} />}
+          {job.salary && <Badge label={job.salary} variant="success" />}
+        </div>
+
+        {/* Tags */}
+        {job.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 items-center">
+            {job.tags.slice(0, 5).map((tag) => (
+              <span
+                key={tag}
+                className="text-xs text-text-muted bg-base px-2 py-0.5 rounded-full border border-border"
+              >
+                {tag}
+              </span>
+            ))}
+            {job.tags.length > 5 && (
+              <span className="text-xs text-text-muted px-1">
+                +{job.tags.length - 5}
+              </span>
+            )}
+          </div>
         )}
-        {job.location && <Badge label={job.location} />}
-        {job.salary && <Badge label={job.salary} variant="success" />}
+
+        {/* LLM notes */}
+        {job.llm_notes && (
+          <p className="text-xs text-text-muted leading-relaxed border-t border-border pt-3">
+            {job.llm_notes}
+          </p>
+        )}
       </div>
 
-      {/* Tags */}
-      {job.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1">
-          {job.tags.slice(0, 5).map((tag) => (
-            <span
-              key={tag}
-              className="text-xs text-text-muted bg-base px-2 py-0.5 rounded-full border border-border"
-            >
-              {tag}
-            </span>
-          ))}
-          {job.tags.length > 5 && (
-            <span className="text-xs text-text-muted px-1">
-              +{job.tags.length - 5}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* LLM notes */}
-      {job.llm_notes && (
-        <p className="text-xs text-text-muted leading-relaxed border-t border-border pt-3">
-          {job.llm_notes}
-        </p>
-      )}
-
       {/* Footer */}
-      <div className="flex items-center justify-between pt-1 border-t border-border">
+      <div className="flex items-center justify-between pt-1 mt-auto">
         <span className="text-xs text-text-muted">
           {timeAgo(job.posted_at)}
         </span>

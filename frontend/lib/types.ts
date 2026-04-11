@@ -46,3 +46,37 @@ export const APPLICATION_STATUSES: ApplicationStatus[] = [
   "rejected",
   "discarded",
 ]
+
+export interface Lead {
+  id: number
+  name: string
+  email: string | null
+  linkedin_url: string | null
+  company: string | null
+  title: string | null
+  notes: string | null
+  created_at: string
+  updated_at: string
+  linked_jobs_count: number
+}
+
+export interface JobLead {
+  id: number
+  job_id: number
+  lead_id: number
+  relationship: LeadRelationship | null
+  notes: string | null
+  created_at: string
+  job_title: string
+  company: string
+  job_url: string
+}
+
+export type LeadRelationship = "recruiter" | "hiring_manager" | "referral" | "other"
+
+export const LEAD_RELATIONSHIPS: { value: LeadRelationship; label: string }[] = [
+  { value: "recruiter", label: "Recruiter" },
+  { value: "hiring_manager", label: "Hiring Manager" },
+  { value: "referral", label: "Referral" },
+  { value: "other", label: "Other" },
+]
