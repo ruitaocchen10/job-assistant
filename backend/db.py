@@ -64,3 +64,15 @@ def save_jobs(jobs: list[dict]) -> int:
     conn.commit()
     conn.close()
     return inserted
+
+
+def cleanup_hidden_jobs(days: int = 30) -> int:
+    """Delete hidden jobs older than `days` days. Returns count of deleted rows."""
+    conn = get_connection()
+    result = conn.execute(
+        "DELETE FROM jobs WHERE hidden = 1 AND hidden_at < datetime('now', ? || ' days')",
+        (f"-{days}",),
+    )
+    conn.commit()
+    conn.close()
+    return result.rowcount

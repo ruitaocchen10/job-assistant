@@ -150,11 +150,22 @@ def save_job(job_id: int):
     return ApplicationOut(**dict(row))
 
 
+@router.delete("/hidden", status_code=200)
+def purge_hidden_jobs():
+    """Delete hidden jobs that have been hidden for more than 30 days."""
+    from db import cleanup_hidden_jobs
+    deleted = cleanup_hidden_jobs(days=30)
+    return {"deleted": deleted}
+
+
 @router.delete("/{job_id}", status_code=204)
 def hide_job(job_id: int):
     conn = get_connection()
 
-    result = conn.execute("UPDATE jobs SET hidden = 1 WHERE id = ? AND hidden = 0", (job_id,))
+    result = conn.execute(
+        "UPDATE jobs SET hidden = 1, hidden_at = strftime('%Y-%m-%dT%H:%M:%SZ', 'now') WHERE id = ? AND hidden = 0",
+        (job_id,),
+    )
     conn.commit()
     conn.close()
 
