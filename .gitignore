@@ -1,5 +1,14 @@
 # env
+.env
 .env.local
 
 # db
-data/jobs.db
+*.db
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# misc
+.DS_Store
