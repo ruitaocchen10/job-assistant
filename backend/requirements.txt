@@ -2,3 +2,4 @@ requests
 anthropic
 fastapi
 uvicorn[standard]
+mcp

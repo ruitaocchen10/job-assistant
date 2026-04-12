@@ -14,6 +14,8 @@ A relational lead tracking system links contacts/leads to specific job opportuni
 npm run dev      # Start development server (localhost:3000)
 npm run build    # Production build
 npm run lint     # Run ESLint
+
+cd backend && uvicorn apis.api:app --reload   # Start backend API server (localhost:8000)
 ```
 
 No test runner is configured.
