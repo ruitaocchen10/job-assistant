@@ -7,7 +7,7 @@ import anthropic
 
 from db import get_connection
 
-PROFILE_PATH = os.path.join(os.path.dirname(__file__), "user_profile.md")
+PROFILE_PATH = os.path.join(os.path.dirname(__file__), "user_context", "user_profile.md")
 MODEL = "claude-haiku-4-5-20251001"
 
 
