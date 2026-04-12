@@ -97,6 +97,24 @@ async def list_tools():
             }
         ),
         Tool(
+            name="add_job",
+            description="Manually add a job to the database. Use this when the user pastes a job listing or provides job details directly.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string", "description": "Job title (required)"},
+                    "company": {"type": "string", "description": "Company name (required)"},
+                    "url": {"type": "string", "description": "Job posting URL (required)"},
+                    "location": {"type": "string", "description": "Job location (optional)"},
+                    "job_type": {"type": "string", "description": "e.g. full-time, part-time, contract (optional)"},
+                    "salary": {"type": "string", "description": "Salary or compensation info (optional)"},
+                    "description": {"type": "string", "description": "Full job description text (optional)"},
+                    "tags": {"type": "array", "items": {"type": "string"}, "description": "List of relevant tags or skills (optional)"}
+                },
+                "required": ["title", "company", "url"]
+            }
+        ),
+        Tool(
             name="daily_brief",
             description="Get a summary of your job search status: new jobs from the last 24 hours, applications by status, and total lead count.",
             inputSchema={
@@ -123,6 +141,8 @@ async def call_tool(name: str, arguments: dict):
         return await handle_get_leads(arguments)
     elif name == "update_lead":
         return await handle_update_lead(arguments)
+    elif name == "add_job":
+        return await handle_add_job(arguments)
     elif name == "daily_brief":
         return await handle_daily_brief(arguments)
     else:
@@ -351,6 +371,63 @@ async def handle_update_lead(args: dict):
     conn.close()
 
     return [TextContent(type="text", text=f"Lead {lead_id} updated successfully")]
+
+
+async def handle_add_job(args: dict):
+    """Manually insert a job into the database."""
+    import json as _json
+    from datetime import datetime, timezone
+
+    title = args.get("title", "").strip()
+    company = args.get("company", "").strip()
+    url = args.get("url", "").strip()
+
+    if not title or not company or not url:
+        return [TextContent(type="text", text="Error: title, company, and url are required")]
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    # Get or create company
+    cur.execute("SELECT id FROM companies WHERE name = ?", (company,))
+    row = cur.fetchone()
+    if row:
+        company_id = row[0]
+    else:
+        cur.execute("INSERT INTO companies (name) VALUES (?)", (company,))
+        company_id = cur.lastrowid
+
+    try:
+        cur.execute(
+            """
+            INSERT INTO jobs
+                (company_id, title, location, url, salary, job_type,
+                 tags, description, source, source_id, posted_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                company_id,
+                title,
+                args.get("location"),
+                url,
+                args.get("salary"),
+                args.get("job_type"),
+                _json.dumps(args.get("tags", [])),
+                args.get("description", ""),
+                "manual",
+                url,
+                datetime.now(timezone.utc).isoformat(),
+            ),
+        )
+        job_id = cur.lastrowid
+        conn.commit()
+        conn.close()
+        return [TextContent(type="text", text=f"Job '{title}' at {company} added successfully with ID {job_id}")]
+    except Exception as e:
+        conn.close()
+        if "UNIQUE constraint" in str(e):
+            return [TextContent(type="text", text=f"A job with this URL already exists in the database.")]
+        return [TextContent(type="text", text=f"Error adding job: {e}")]
 
 
 async def handle_daily_brief(args: dict):
