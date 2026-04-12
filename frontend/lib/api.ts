@@ -1,9 +1,16 @@
 import type { Application, ApplicationStatus, Job, Lead, JobLead } from "./types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, options);
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      "X-API-Key": API_KEY,
+      ...options?.headers,
+    },
+  });
   if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
   if (res.status === 204) return undefined as T;
   return res.json();
